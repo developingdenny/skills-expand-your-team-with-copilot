@@ -190,6 +190,80 @@ section h3 {
   justify-content: center;
 }
 
+/* Social Sharing Buttons */
+.share-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  margin-top: 8px;
+}
+
+.share-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.share-button {
+  background: var(--border-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.share-button:hover {
+  transform: scale(1.15);
+}
+
+.share-twitter:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.share-facebook:hover {
+  background-color: #1877f2;
+  color: #fff;
+  border-color: #1877f2;
+}
+
+.share-whatsapp:hover {
+  background-color: #25d366;
+  color: #fff;
+  border-color: #25d366;
+}
+
+.share-copy:hover {
+  background-color: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.share-copy-success {
+  background-color: var(--success) !important;
+  color: #fff !important;
+  border-color: var(--success) !important;
+}
+
 /* Activity Tag */
 .activity-tag {
   position: absolute;

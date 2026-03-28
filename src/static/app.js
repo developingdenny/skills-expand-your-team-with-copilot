@@ -569,6 +569,15 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-section">
+        <span class="share-label">Share:</span>
+        <div class="share-buttons">
+          <button class="share-button share-twitter" data-activity="${name}" title="Share on X (Twitter)">𝕏</button>
+          <button class="share-button share-facebook" data-activity="${name}" title="Share on Facebook">f</button>
+          <button class="share-button share-whatsapp" data-activity="${name}" title="Share on WhatsApp">💬</button>
+          <button class="share-button share-copy" data-activity="${name}" title="Copy link">🔗</button>
+        </div>
+      </div>
     `;
 
     // Add click handlers for delete buttons
@@ -587,7 +596,51 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // Add click handlers for share buttons
+    const shareButtons = activityCard.querySelectorAll(".share-button");
+    shareButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const platform = button.classList[1].replace("share-", "");
+        shareActivity(platform, name, details.description, formattedSchedule, button);
+      });
+    });
+
     activitiesList.appendChild(activityCard);
+  }
+
+  // Share an activity on social media or copy link
+  function shareActivity(platform, name, description, schedule, buttonEl) {
+    const pageUrl = window.location.href.split("?")[0];
+    const shortDesc = description.length > 100 ? description.slice(0, 97) + "..." : description;
+    const shareText = `Check out ${name} at Mergington High School! ${shortDesc} Schedule: ${schedule}`;
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(pageUrl);
+
+    const urls = {
+      twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+      whatsapp: `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`,
+    };
+
+    if (platform === "copy") {
+      navigator.clipboard.writeText(`${shareText} ${pageUrl}`).then(() => {
+        const original = buttonEl.textContent;
+        buttonEl.textContent = "✔";
+        buttonEl.classList.add("share-copy-success");
+        setTimeout(() => {
+          buttonEl.textContent = original;
+          buttonEl.classList.remove("share-copy-success");
+        }, 2000);
+      }).catch(() => {
+        const original = buttonEl.textContent;
+        buttonEl.textContent = "✖";
+        setTimeout(() => {
+          buttonEl.textContent = original;
+        }, 2000);
+      });
+    } else if (urls[platform]) {
+      window.open(urls[platform], "_blank", "noopener,noreferrer");
+    }
   }
 
   // Event listeners for search and filter
